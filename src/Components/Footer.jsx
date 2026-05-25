@@ -29,7 +29,7 @@ const Footer = () => {
         <div>
           <h3 className="font-bold text-white mb-4">Follow Us</h3>
           <div className="flex gap-4 text-2xl">
-            <a href="https://facebook.com" target="_blank" rel="noreferrer">
+            <a href="https://www.facebook.com/mim.afsana.5015" target="_blank" rel="noreferrer">
               <FaFacebook />
             </a>
             <a href="https://linkedin.com" target="_blank" rel="noreferrer">
