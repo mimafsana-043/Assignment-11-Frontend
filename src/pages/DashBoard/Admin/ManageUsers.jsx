@@ -1,10 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import Swal from "sweetalert2";
+
 import LoadingSpinner from "../../../Components/LoadingSpinner";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const ManageUsers = () => {
   const axiosSecure = useAxiosSecure();
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   const {
     data: users = [],
@@ -18,6 +23,13 @@ const ManageUsers = () => {
     },
   });
 
+  const totalPages = Math.ceil(users.length / itemsPerPage);
+
+  const paginatedUsers = users.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   const handleRoleChange = (id, role) => {
     Swal.fire({
       title: "Are you sure?",
@@ -29,7 +41,8 @@ const ManageUsers = () => {
       confirmButtonText: "Yes, change it",
     }).then(result => {
       if (result.isConfirmed) {
-        axiosSecure.patch(`/users/role/${id}`, { role })
+        axiosSecure
+          .patch(`/users/role/${id}`, { role })
           .then(res => {
             if (res.data.modifiedCount > 0) {
               Swal.fire({
@@ -41,13 +54,20 @@ const ManageUsers = () => {
 
               refetch();
             }
+          })
+          .catch(error => {
+            Swal.fire({
+              icon: "error",
+              title: "Role update failed",
+              text: error.response?.data?.message || error.message,
+            });
           });
       }
     });
   };
 
   if (isLoading) {
-    return <div className="text-center py-10"><LoadingSpinner></LoadingSpinner></div>;
+    return <LoadingSpinner />;
   }
 
   return (
@@ -80,17 +100,22 @@ const ManageUsers = () => {
           </thead>
 
           <tbody>
-            {users.map((singleUser, index) => (
+            {paginatedUsers.map((singleUser, index) => (
               <tr
                 key={singleUser._id}
                 className="border-b hover:bg-gray-50 transition"
               >
-                <td className="p-4 font-medium">{index + 1}</td>
+                <td className="p-4 font-medium">
+                  {(currentPage - 1) * itemsPerPage + index + 1}
+                </td>
 
                 <td className="p-4">
                   <div className="flex items-center gap-3">
                     <img
-                      src={singleUser.photo || "https://i.ibb.co/4pDNDk1/avatar.png"}
+                      src={
+                        singleUser.photo ||
+                        "https://i.ibb.co/4pDNDk1/avatar.png"
+                      }
                       alt={singleUser.name}
                       className="w-11 h-11 rounded-full object-cover border"
                     />
@@ -99,16 +124,12 @@ const ManageUsers = () => {
                       <p className="font-semibold text-gray-900">
                         {singleUser.name || "No Name"}
                       </p>
-                      <p className="text-xs text-gray-500">
-                        Joined user
-                      </p>
+                      <p className="text-xs text-gray-500">Joined user</p>
                     </div>
                   </div>
                 </td>
 
-                <td className="p-4 text-gray-600">
-                  {singleUser.email}
-                </td>
+                <td className="p-4 text-gray-600">{singleUser.email}</td>
 
                 <td className="p-4">
                   <span className="px-3 py-1 rounded-full text-sm font-semibold bg-indigo-100 text-indigo-700 capitalize">
@@ -119,7 +140,7 @@ const ManageUsers = () => {
                 <td className="p-4">
                   <select
                     value={singleUser.role}
-                    onChange={(e) =>
+                    onChange={e =>
                       handleRoleChange(singleUser._id, e.target.value)
                     }
                     className="px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white"
@@ -135,11 +156,27 @@ const ManageUsers = () => {
         </table>
 
         {users.length === 0 && (
-          <p className="text-center text-gray-500 py-8">
-            No users found.
-          </p>
+          <p className="text-center text-gray-500 py-8">No users found.</p>
         )}
       </div>
+
+      {totalPages > 1 && (
+        <div className="flex flex-wrap justify-center gap-2 mt-8">
+          {[...Array(totalPages).keys()].map(number => (
+            <button
+              key={number}
+              onClick={() => setCurrentPage(number + 1)}
+              className={`px-4 py-2 rounded-xl font-semibold transition ${
+                currentPage === number + 1
+                  ? "bg-indigo-600 text-white"
+                  : "bg-gray-200 text-gray-700 hover:bg-indigo-100"
+              }`}
+            >
+              {number + 1}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
