@@ -14,6 +14,9 @@ const Footer = () => {
           <p className="mt-4 text-sm text-gray-400">
             A modern platform to create, discover and participate in creative contests.
           </p>
+          <p className="mt-4 text-sm text-gray-400">
+            Join us to enhance your knowledge.
+          </p>
         </div>
 
         <div>
