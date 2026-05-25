@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import LoadingSpinner from "../../Components/LoadingSpinner";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import ErrorPage from "../ErrorPage/ErrorPage";
 
 const PopularContests = () => {
   const axiosPublic = useAxiosPublic();
@@ -29,7 +30,7 @@ const PopularContests = () => {
   if (isError) {
     return (
       <section className="max-w-7xl mx-auto px-4 py-20 text-center">
-        <p className="text-red-500">Failed to load contests.</p>
+        <p className="text-red-500"><ErrorPage></ErrorPage></p>
       </section>
     );
   }
