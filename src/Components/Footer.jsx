@@ -32,7 +32,7 @@ const Footer = () => {
             <a href="https://www.facebook.com/mim.afsana.5015" target="_blank" rel="noreferrer">
               <FaFacebook />
             </a>
-            <a href="https://linkedin.com" target="_blank" rel="noreferrer">
+            <a href="https://www.linkedin.com/in/mim-afsana-63a647308?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noreferrer">
               <FaLinkedin />
             </a>
           </div>
