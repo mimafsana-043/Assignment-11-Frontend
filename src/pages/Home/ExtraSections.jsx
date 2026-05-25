@@ -17,7 +17,7 @@ const ExtraSections = () => {
       </section>
 
       <section>
-        <h2 className="text-4xl font-bold text-center mb-10">FAQ</h2>
+        <h2 className="text-4xl font-bold text-center mb-10 text-indigo-600">FAQ</h2>
 
         <div className="space-y-4">
           {[
@@ -26,7 +26,7 @@ const ExtraSections = () => {
             "Can I create contests?",
           ].map(q => (
             <div key={q} className="bg-white p-6 rounded-2xl shadow">
-              <h3 className="font-bold">{q}</h3>
+              <h3 className="font-bold text-indigo-600">{q}</h3>
               <p className="text-gray-500 mt-2">
                 Login, explore contests, register, submit your task and wait for winner declaration.
               </p>
