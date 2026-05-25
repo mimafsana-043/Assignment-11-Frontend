@@ -1,0 +1,43 @@
+{
+  "name": "contest-hub-frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@stripe/react-stripe-js": "^6.4.0",
+    "@stripe/stripe-js": "^9.6.0",
+    "@tanstack/react-query": "^5.100.11",
+    "axios": "^1.16.1",
+    "firebase": "^12.13.0",
+    "framer-motion": "^12.39.0",
+    "react": "^19.2.6",
+    "react-datepicker": "^9.1.0",
+    "react-dom": "^19.2.6",
+    "react-hook-form": "^7.76.0",
+    "react-icons": "^5.6.0",
+    "react-router-dom": "^7.15.1",
+    "recharts": "^3.8.1",
+    "stripe": "^22.1.1",
+    "sweetalert2": "^11.26.24"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "autoprefixer": "^10.5.0",
+    "eslint": "^10.3.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.6.0",
+    "postcss": "^8.5.15",
+    "tailwindcss": "^3.4.17",
+    "vite": "^8.0.12"
+  }
+}
