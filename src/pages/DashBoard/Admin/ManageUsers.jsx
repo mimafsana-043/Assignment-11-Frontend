@@ -1,4 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import Swal from "sweetalert2";
 
@@ -11,17 +10,7 @@ const ManageUsers = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
-  const {
-    data: users = [],
-    refetch,
-    isLoading,
-  } = useQuery({
-    queryKey: ["users"],
-    queryFn: async () => {
-      const res = await axiosSecure.get("/users");
-      return res.data;
-    },
-  });
+  
 
   const totalPages = Math.ceil(users.length / itemsPerPage);
 
