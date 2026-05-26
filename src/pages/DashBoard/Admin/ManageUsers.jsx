@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
 
+import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "../../../Components/LoadingSpinner";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
@@ -10,7 +11,17 @@ const ManageUsers = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
-  
+  const {
+    data: users = [],
+    refetch,
+    isLoading,
+  } = useQuery({
+    queryKey: ["users"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/users");
+      return res.data;
+    },
+  });
 
   const totalPages = Math.ceil(users.length / itemsPerPage);
 
