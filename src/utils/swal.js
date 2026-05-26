@@ -9,7 +9,7 @@ export const successAlert = (title = "Success") => {
   });
 };
 
-export const errorAlert = (title = "Something went wrong") => {
+export const errorAlert = (title = "Something went wrong.Please try again!!") => {
   return Swal.fire({
     icon: "error",
     title,
