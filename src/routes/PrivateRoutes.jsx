@@ -10,7 +10,7 @@ const PrivateRoute = ({ children }) => {
   const location = useLocation();
 
   if (loading) {
-    return <span><LoadingSpinner></LoadingSpinner></span>;
+    return <LoadingSpinner></LoadingSpinner>;
   }
 
   if (user) {

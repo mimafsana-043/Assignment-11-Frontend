@@ -8,7 +8,7 @@ const CreatorRoute = ({ children }) => {
   const [role, roleLoading] = useRole();
 
   if (loading || roleLoading) {
-    return <span><LoadingSpinner></LoadingSpinner></span>;
+    return <LoadingSpinner></LoadingSpinner>;
   }
 
   if (user && role === "creator") {

@@ -5,7 +5,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
-  updateProfile
+  updateProfile,
 } from "firebase/auth";
 
 import axios from "axios";
@@ -49,33 +49,39 @@ const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, currentUser => {
+    const unsubscribe = onAuthStateChanged(auth, async currentUser => {
       setUser(currentUser);
 
       if (currentUser) {
-        const userInfo = {
-          email: currentUser.email,
-        };
+        try {
+          const userInfo = {
+            email: currentUser.email,
+          };
 
-        console.log("API URL:", import.meta.env.VITE_API_URL);
-        console.log("JWT userInfo:", userInfo);
+          const apiUrl = import.meta.env.VITE_API_URL;
 
-        axios
-          .post(`${import.meta.env.VITE_API_URL}/jwt`, userInfo)
-          .then(res => {
-            console.log("JWT response:", res.data);
+          console.log("API URL:", apiUrl);
+          console.log("JWT userInfo:", userInfo);
 
-            if (res.data.token) {
-              localStorage.setItem("access-token", res.data.token);
-            }
+          if (!apiUrl) {
+            throw new Error("VITE_API_URL is missing");
+          }
 
-            setLoading(false);
-          })
-          .catch(error => {
-            console.log("JWT error:", error.response?.data || error.message);
+          const res = await axios.post(`${apiUrl}/jwt`, userInfo);
+
+          console.log("JWT response:", res.data);
+
+          if (res.data?.token) {
+            localStorage.setItem("access-token", res.data.token);
+          } else {
             localStorage.removeItem("access-token");
-            setLoading(false);
-          });
+          }
+        } catch (error) {
+          console.log("JWT error:", error.response?.data || error.message);
+          localStorage.removeItem("access-token");
+        } finally {
+          setLoading(false);
+        }
       } else {
         localStorage.removeItem("access-token");
         setLoading(false);
