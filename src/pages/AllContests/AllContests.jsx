@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import LoadingSpinner from "../../components/LoadingSpinner";
+import LoadingSpinner from "../../Components/LoadingSpinner";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const AllContests = () => {
